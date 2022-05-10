@@ -1,0 +1,18 @@
+(defun addline (a u i)
+        (let ((m (array-dimension a 0)) (n (array-dimension a 1)))
+                (let ((b (make-array (list (1+ m) n))))
+                        (dotimes (j i)
+                                (dotimes (k n)
+                                        (setf (aref b j k) (aref a j k))))
+                        (dotimes (k n)
+                                (setf (aref b i k) (aref u k)))
+                        (loop for j upfrom (1+ i) to m do
+                                (dotimes (k n)
+                                        (setf (aref b j k) (aref a (1- j) k))))
+                b)))
+
+(defun print-matrix (a &optional (format "~a"))
+        (dotimes (i (array-dimension a 0))
+                (dotimes (j (array-dimension a 1))
+                        (format t format (aref a i j)))
+                (terpri)))
